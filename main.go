@@ -1,8 +1,9 @@
-package elastic
+package elasticLogger
 
 import (
 	"bytes"
 	"fmt"
+	"github.com/diaspangestu/elastic-logger/elastic"
 	"github.com/gin-gonic/gin"
 	"io"
 	"time"
@@ -18,7 +19,7 @@ func (r *ResponseCapture) Write(b []byte) (int, error) {
 	return r.ResponseWriter.Write(b)
 }
 
-func (l *Logger) Middleware(serviceName string) gin.HandlerFunc {
+func (l *elastic.Logger) Middleware(serviceName string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// start timer
 		start := time.Now()
@@ -46,7 +47,7 @@ func (l *Logger) Middleware(serviceName string) gin.HandlerFunc {
 		responseBody := responseBodyBuffer.String()
 		headers := formatHeaders(c.Request.Header)
 
-		logMsg := LogMessage{
+		logMsg := elastic.LogMessage{
 			ServiceName: l.service,
 			Hostname:    c.Request.Host,
 			Timestamp:   time.Now().Format("20060201"),
