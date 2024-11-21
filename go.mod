@@ -1,4 +1,4 @@
-module cdp-elastic-logger
+module github.com/diaspangestu/elastic-logger
 
 go 1.23.1
 
